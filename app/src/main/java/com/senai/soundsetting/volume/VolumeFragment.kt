@@ -35,13 +35,13 @@ class VolumeFragment : Fragment() {
         val currentVolumeText: TextView = view.findViewById(R.id.currentVolumeText)
         val saveButton: Button = view.findViewById(R.id.saveButton)
 
-        // Observe LiveData from ViewModel
+        // Observa as mudanças no LiveData do ViewModel para aplicar o valor de volume correto ao seek bar
         viewModel.volumeLevel.observe(viewLifecycleOwner, Observer { level ->
             currentVolumeText.text = "Current Volume: $level"
             volumeSeekBar.progress = level
         })
 
-        // Update ViewModel when SeekBar changes
+        // Atualiza o view model com o valor de volume definido pelo usuario
         volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 viewModel.setVolumeLevel(progress)
@@ -52,6 +52,8 @@ class VolumeFragment : Fragment() {
         })
 
         saveButton.setOnClickListener {
+            //Atualiza banco de dados com o valor de volume
+            viewModel.saveData()
             Toast.makeText(context, "Volume set to ${viewModel.volumeLevel.value}", Toast.LENGTH_SHORT).show()
         }
     }

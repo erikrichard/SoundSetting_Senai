@@ -24,7 +24,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
@@ -37,29 +36,33 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = view.findViewById(R.id.profile_list)
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+        //Configura o recycleView
+        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val addProfileButton: ImageButton = view.findViewById(R.id.add_profile)
 
-        // Observe profiles list
+        // Observa mudanças na lista de Profiles e atualiza o recycleView
         viewModel.profiles.observe(viewLifecycleOwner, Observer { profiles ->
             val adapter = ProfileAdapter(profiles) { profile ->
+                //Callback chamado quando um novo profile é selecionado pelo usuario
                 viewModel.selectProfile(profile)
             }
             recyclerView.adapter = adapter
         })
-        // Observe selected profile
+
+        // Mostra um toast quando um novo profile for selecionado
         viewModel.selectedProfile.observe(viewLifecycleOwner, Observer { profile ->
             if (profile != null) {
                 Toast.makeText(context, "Selected: ${profile.name}", Toast.LENGTH_SHORT).show()
             }
         })
 
+        //Mostra a dialog quando o botao de adicionar profile for clicado
         addProfileButton.setOnClickListener {
             showAddProfileDialog()
         }
     }
-
+    //Mostra uma Dialog em tela com o objetivo de adicionar um novo profile
     private fun showAddProfileDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_profile, null)
         val editTextProfileName = dialogView.findViewById<EditText>(R.id.editTextProfileName)

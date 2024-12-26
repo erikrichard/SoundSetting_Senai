@@ -10,5 +10,9 @@ class VolumeViewModel : ViewModel() {
 
     fun setVolumeLevel(level: Int) {
         _volumeLevel.value = level
+
+    }
+    fun saveData() {
+        //Todo: Atualizar banco de dados com o valor de volume
     }
 }

@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Configura o menu inferior de acordo com a grafo de navegacao criado em res/navigation/nav_graph
         val bottomBar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(bottomBar, navController)

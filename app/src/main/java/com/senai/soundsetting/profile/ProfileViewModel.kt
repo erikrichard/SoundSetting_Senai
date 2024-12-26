@@ -7,6 +7,7 @@ import com.senai.soundsetting.profile.data.Profile
 
 class ProfileViewModel : ViewModel() {
     private val _profiles = MutableLiveData<List<Profile>>().apply {
+        //Todo: Extrair list do banco de dados
         value = listOf(
             Profile("John Doe"),
             Profile("Jane Smith"),
@@ -20,7 +21,7 @@ class ProfileViewModel : ViewModel() {
 
     fun selectProfile(profile: Profile) {
         _selectedProfile.value = profile
-        //update shared preference with the current selected profile
+        //Todo: update shared preference with the current selected profile
     }
 
     fun clearSelection() {
@@ -32,6 +33,6 @@ class ProfileViewModel : ViewModel() {
         updatedList.add(profile)
         _profiles.value = updatedList
 
-        //Insert the new Profile to DB
+        //Todo: Inserir novo profile no banco de dados
     }
 }

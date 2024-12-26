@@ -45,7 +45,7 @@ class BmtFragment : Fragment() {
         val trebleText: TextView = view.findViewById(R.id.trebleText)
         val saveButton: Button = view.findViewById(R.id.saveButton)
 
-        // Observe LiveData from ViewModel
+        // Observa mudanças no view model e atualiza a view de acordo com elas
         viewModel.bassLevel.observe(viewLifecycleOwner, Observer { level ->
             bassText.text = "Bass: $level"
             bassSeekBar.progress = level
@@ -61,7 +61,7 @@ class BmtFragment : Fragment() {
             trebleSeekBar.progress = level
         })
 
-        // Update ViewModel when SeekBar changes
+        // Atualiza o banco de dados com as mudanças nos valores de bmt
         bassSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 viewModel.setBassLevel(progress)
