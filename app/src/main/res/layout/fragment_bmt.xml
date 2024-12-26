@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- TextView and SeekBar for Bass -->
+    <TextView
+        android:id="@+id/bassText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bass: 50"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"/>
+
+    <SeekBar
+        android:id="@+id/bassSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bassText"
+        android:max="100"
+        android:progress="50"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- TextView and SeekBar for Mid -->
+    <TextView
+        android:id="@+id/midText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mid: 50"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_below="@id/bassSeekBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"/>
+
+    <SeekBar
+        android:id="@+id/midSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/midText"
+        android:max="100"
+        android:progress="50"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- TextView and SeekBar for Treble -->
+    <TextView
+        android:id="@+id/trebleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Treble: 50"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_below="@id/midSeekBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"/>
+
+    <SeekBar
+        android:id="@+id/trebleSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trebleText"
+        android:max="100"
+        android:progress="50"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Button to save equalizer settings -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_below="@id/trebleSeekBar"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

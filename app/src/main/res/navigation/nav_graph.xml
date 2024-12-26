@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.senai.soundsetting.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/volumeFragment"
+        android:name="com.senai.soundsetting.volume.VolumeFragment"
+        android:label="fragment_volume"
+        tools:layout="@layout/fragment_volume" />
+    <fragment
+        android:id="@+id/bmtFragment"
+        android:name="com.senai.soundsetting.bmt.BmtFragment"
+        android:label="fragment_bmt"
+        tools:layout="@layout/fragment_bmt" />
+
+</navigation>

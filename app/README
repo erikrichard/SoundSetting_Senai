@@ -1,0 +1,17 @@
+PROXIMOS PASSOS
+
+PROFILE
+- CONECTAR VIEW MODEL COM O BANCO DE DADOS PARA GERAR UMA LISTA DE TODOS OS PROFILES CADASTRADOS E PROVER PARA O RECYCLE VIEW
+- CRIAR LOGICA PARA BLOQUEAR O BOTTOM BAR MENU QUANDO NÃO EXISTE NENHUM PERFIL CADASTRADO, FORÇANDO O USUARIO A CRIAR UM NOVO PERFIL
+- CRIAR UMA SHARED PREFERENCE PARA GUARDAR O PERFIL ATUAL (SELECIONADO). DESSA FORMA AS OUTRAS TELAS PODERÃO TER VISIBILIDADE DO PERFIL ATUAL
+- CRIAR UM NOVO REGISTRO NO BANCO DE DADOS AO CLICAR NO BOTÃO DE ADD PROFILE
+
+VOLUME
+- CONECTAR O VolumeViewModel com o banco de dados
+- apresentar o valor de volume cadastrado para o profile atual ao abrir a tela
+- atualizar o banco com um novo valor de volume ao clicar no botão de salvar
+
+BMT
+- CONECTAR O BmtViewModel com o banco de dados
+- apresentar o valor de BMT cadastrado para o profile atual ao abrir a tela
+- atualizar o banco com um novo valor de BMT ao clicar no botão de salvar
