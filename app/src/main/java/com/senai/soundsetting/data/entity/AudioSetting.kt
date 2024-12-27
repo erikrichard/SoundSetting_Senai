@@ -10,17 +10,17 @@ data class AudioSetting(
     val uid:Int = 0,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    var name: String,
 
     @ColumnInfo(name = "bass")
-    val bass: Int = 0,
+    var bass: Int = 0,
 
     @ColumnInfo(name = "mid")
-    val mid: Int = 0,
+    var mid: Int = 0,
 
     @ColumnInfo(name = "treble")
-    val treble: Int = 0,
+    var treble: Int = 0,
 
     @ColumnInfo(name = "volumeLevel")
-    val volumeLevel : Int = 0,
+    var volumeLevel : Int = 0,
 )

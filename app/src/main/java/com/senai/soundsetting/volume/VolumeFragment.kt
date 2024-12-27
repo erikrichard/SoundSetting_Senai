@@ -12,13 +12,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.senai.soundsetting.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VolumeFragment : Fragment() {
 
     private val viewModel: VolumeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.volumeLevel
     }
 
     override fun onCreateView(

@@ -11,4 +11,7 @@ interface AudioSettingRepository {
     fun getRepositoryState() : LiveData<RepositoryState>
     fun selectProfile(profile: AudioSetting)
     fun clearProfileSelection()
+    suspend fun getVolumeLevel() : Int
+    suspend fun setVolumeLevel(level: Int)
+
 }
