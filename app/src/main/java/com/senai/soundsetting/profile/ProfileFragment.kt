@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.senai.soundsetting.R
-import com.senai.soundsetting.profile.data.Profile
+import com.senai.soundsetting.data.entity.AudioSetting
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
 
@@ -42,7 +44,7 @@ class ProfileFragment : Fragment() {
         val addProfileButton: ImageButton = view.findViewById(R.id.add_profile)
 
         // Observa mudanças na lista de Profiles e atualiza o recycleView
-        viewModel.profiles.observe(viewLifecycleOwner, Observer { profiles ->
+        viewModel.profiles.observe(viewLifecycleOwner, Observer<List<AudioSetting>> { profiles ->
             val adapter = ProfileAdapter(profiles) { profile ->
                 //Callback chamado quando um novo profile é selecionado pelo usuario
                 viewModel.selectProfile(profile)
@@ -51,7 +53,7 @@ class ProfileFragment : Fragment() {
         })
 
         // Mostra um toast quando um novo profile for selecionado
-        viewModel.selectedProfile.observe(viewLifecycleOwner, Observer { profile ->
+        viewModel.selectedProfile.observe(viewLifecycleOwner, Observer<AudioSetting?> { profile ->
             if (profile != null) {
                 Toast.makeText(context, "Selected: ${profile.name}", Toast.LENGTH_SHORT).show()
             }
@@ -75,7 +77,7 @@ class ProfileFragment : Fragment() {
         buttonAddProfile.setOnClickListener {
             val profileName = editTextProfileName.text.toString().trim()
             if (profileName.isNotEmpty()) {
-                viewModel.addProfile(Profile(profileName))
+                viewModel.addProfile(AudioSetting(name = profileName))
                 dialog.dismiss()
             } else {
                 editTextProfileName.error = "Profile name cannot be empty"

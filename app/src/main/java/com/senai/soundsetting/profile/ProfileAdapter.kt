@@ -1,5 +1,6 @@
 package com.senai.soundsetting.profile
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,10 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.senai.soundsetting.R
-import com.senai.soundsetting.profile.data.Profile
+import com.senai.soundsetting.data.entity.AudioSetting
 
-class ProfileAdapter(private val profiles: List<Profile>,
-                     private val onProfileSelected: (Profile) -> Unit) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
+class ProfileAdapter(private val profiles: List<AudioSetting>,
+                     private val onProfileSelected: (AudioSetting) -> Unit) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
     private var selectedPosition: Int = RecyclerView.NO_POSITION
 
@@ -24,7 +25,7 @@ class ProfileAdapter(private val profiles: List<Profile>,
         return ProfileViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProfileViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val profile = profiles[position]
         holder.profileName.text = profile.name
 
