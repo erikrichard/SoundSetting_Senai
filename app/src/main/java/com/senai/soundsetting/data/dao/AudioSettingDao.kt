@@ -21,4 +21,7 @@ interface AudioSettingDao {
 
     @Delete
     suspend fun deleteAudioSetting(audioSetting: AudioSetting)
+
+    @Query("SELECT volumeLevel FROM audiosetting WHERE uid = :id")
+    suspend fun getVolumeLevel(id: Int): Int
 }

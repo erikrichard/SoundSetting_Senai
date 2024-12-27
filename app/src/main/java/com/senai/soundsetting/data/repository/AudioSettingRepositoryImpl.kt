@@ -19,6 +19,7 @@ class AudioSettingRepositoryImpl
     private val _state = MutableLiveData<RepositoryState>()
     private var state : LiveData<RepositoryState> = _state
     private var currentProfileId : Int = 0
+    private var currentProfile : AudioSetting? = null
 
     init {
         Log.i(TAG, "init")
@@ -33,9 +34,6 @@ class AudioSettingRepositoryImpl
     override suspend fun getAudioSettings(): List<AudioSetting>?{
         Log.i(TAG,"getAudioSettings")
         val list = dao.getAll()
-        list?.forEach {
-            Log.i(TAG,"AudioSetting List: $it")
-        }
         return list
     }
 
@@ -65,6 +63,7 @@ class AudioSettingRepositoryImpl
         Log.i(TAG, "selectProfile - $profile")
         persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, profile.uid.toString())
         currentProfileId = profile.uid
+        currentProfile = profile
         _state.value = RepositoryState.UPDATED
     }
 
@@ -72,6 +71,20 @@ class AudioSettingRepositoryImpl
         Log.i(TAG, "clearProfileSelection")
         persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, "")
         currentProfileId = 0
+        _state.value = RepositoryState.UPDATED
+    }
+
+    override suspend fun getVolumeLevel(): Int {
+        Log.i(TAG, "getVolumeLevel")
+        val volumeLevel = dao.getVolumeLevel(currentProfileId)
+        Log.i(TAG, "getVolumeLevel - $volumeLevel")
+        return volumeLevel
+    }
+
+    override suspend fun setVolumeLevel(level: Int) {
+        Log.i(TAG, "setVolumeLevel - $level")
+        currentProfile?.volumeLevel = level
+        dao.insertAudioSetting(currentProfile!!)
         _state.value = RepositoryState.UPDATED
     }
 }
