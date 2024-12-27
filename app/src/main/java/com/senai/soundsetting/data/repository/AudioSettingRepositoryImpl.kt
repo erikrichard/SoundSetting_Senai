@@ -5,23 +5,37 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.senai.soundsetting.data.dao.AudioSettingDao
 import com.senai.soundsetting.data.entity.AudioSetting
+import com.senai.soundsetting.data.persistance.PersistanceManager
+import com.senai.soundsetting.utils.Constants
 import javax.inject.Inject
 
 class AudioSettingRepositoryImpl
-    @Inject constructor(private val dao: AudioSettingDao) : AudioSettingRepository {
+    @Inject constructor(
+        private val dao: AudioSettingDao,
+        private val persistanceManager: PersistanceManager
+    ) : AudioSettingRepository {
         
     private val TAG = this::class.simpleName
     private val _state = MutableLiveData<RepositoryState>()
     private var state : LiveData<RepositoryState> = _state
+    private var currentProfileId : Int = 0
 
     init {
         Log.i(TAG, "init")
         _state.value = RepositoryState.READY
+        val persistedProfileId = persistanceManager.getData(Constants.PERSISTANCE_PROFILE_KEY, "")
+        if (persistedProfileId.isNotEmpty()) {
+            Log.i(TAG, "Persisted profile id: $persistedProfileId")
+            currentProfileId = persistedProfileId.toInt()
+        }
     }
 
     override suspend fun getAudioSettings(): List<AudioSetting>?{
         Log.i(TAG,"getAudioSettings")
         val list = dao.getAll()
+        list?.forEach {
+            Log.i(TAG,"AudioSetting List: $it")
+        }
         return list
     }
 
@@ -43,8 +57,21 @@ class AudioSettingRepositoryImpl
      }
 
     override fun getRepositoryState(): LiveData<RepositoryState> {
+        Log.i(TAG,"getRepositoryState - ${state.value}")
         return state
     }
 
+    override fun selectProfile(profile: AudioSetting) {
+        Log.i(TAG, "selectProfile - $profile")
+        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, profile.uid.toString())
+        currentProfileId = profile.uid
+        _state.value = RepositoryState.UPDATED
+    }
 
+    override fun clearProfileSelection() {
+        Log.i(TAG, "clearProfileSelection")
+        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, "")
+        currentProfileId = 0
+        _state.value = RepositoryState.UPDATED
+    }
 }

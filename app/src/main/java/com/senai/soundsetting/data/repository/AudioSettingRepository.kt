@@ -9,4 +9,6 @@ interface AudioSettingRepository {
     suspend fun saveAudioSetting(audioSetting: AudioSetting)
     suspend fun deleteAudioSetting(audioSetting: AudioSetting)
     fun getRepositoryState() : LiveData<RepositoryState>
+    fun selectProfile(profile: AudioSetting)
+    fun clearProfileSelection()
 }

@@ -19,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel
     @Inject constructor(
-        private val repository: AudioSettingRepository,
-        private val persistanceManager: PersistanceManager
+        private val repository: AudioSettingRepository
     )
         : ViewModel() {
 
@@ -42,14 +41,15 @@ class ProfileViewModel
     }
 
     fun selectProfile(profile: AudioSetting) {
+        Log.i(TAG, "selectProfile $profile")
         _selectedProfile.value = profile
-        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, profile.uid.toString())
+        repository.selectProfile(profile)
     }
 
     fun clearSelection() {
         Log.i(TAG, "clearSelection")
         _selectedProfile.value = null
-        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, "")
+        repository.clearProfileSelection()
     }
 
     fun addProfile(profile: AudioSetting) {
