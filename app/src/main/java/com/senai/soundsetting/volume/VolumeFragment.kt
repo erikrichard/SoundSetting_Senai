@@ -21,7 +21,6 @@ class VolumeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.volumeLevel
     }
 
     override fun onCreateView(

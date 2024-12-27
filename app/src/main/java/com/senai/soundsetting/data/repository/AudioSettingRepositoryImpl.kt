@@ -92,4 +92,35 @@ class AudioSettingRepositoryImpl
         dao.insertAudioSetting(currentProfile!!)
         _state.value = RepositoryState.UPDATED
     }
+
+    override suspend fun getBassLevel(): Int {
+        Log.i(TAG, "getBassLevel")
+        val bassLevel = dao.getBassLevel(currentProfileId)
+        Log.i(TAG, "getBassLevel - $bassLevel")
+        return bassLevel
+    }
+
+    override suspend fun getMidLevel(): Int {
+        Log.i(TAG, "getMidLevel")
+        val midLevel = dao.getMidLevel(currentProfileId)
+        Log.i(TAG, "getMidLevel - $midLevel")
+        return midLevel
+    }
+
+    override suspend fun getTrebleLevel(): Int {
+        Log.i(TAG, "getTrebleLevel")
+        val trebleLevel = dao.getTrebleLevel(currentProfileId)
+        Log.i(TAG, "getTrebleLevel - $trebleLevel")
+        return trebleLevel
+    }
+
+    override suspend fun setBMTLevel(bassLevel: Int, midLevel: Int, trebleLevel: Int) {
+        Log.i(TAG, "setBMTLevel - $bassLevel, $midLevel, $trebleLevel")
+        currentProfile?.bass = bassLevel
+        currentProfile?.mid = midLevel
+        currentProfile?.treble = trebleLevel
+        dao.insertAudioSetting(currentProfile!!)
+        _state.value = RepositoryState.UPDATED
+    }
+
 }
