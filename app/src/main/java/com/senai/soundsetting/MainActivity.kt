@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.senai.soundsetting.data.persistance.PersistanceManager
 import com.senai.soundsetting.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

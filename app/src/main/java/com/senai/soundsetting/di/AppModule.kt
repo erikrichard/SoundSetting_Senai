@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.senai.soundsetting.data.AudioSettingDatabase
 import com.senai.soundsetting.data.dao.AudioSettingDao
+import com.senai.soundsetting.data.persistance.PersistanceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +35,13 @@ object AppModule {
     fun provideAudioSettingDao(database: AudioSettingDatabase) : AudioSettingDao {
         return database.audioSettingDao()
     }
+
+    @Provides
+    @Singleton
+    fun providePersistanceManager(@ApplicationContext appContext: Context): PersistanceManager {
+        return PersistanceManager(appContext)
+    }
+
 
 
 }
