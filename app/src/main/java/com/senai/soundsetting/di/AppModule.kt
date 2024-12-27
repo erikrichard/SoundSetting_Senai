@@ -41,7 +41,4 @@ object AppModule {
     fun providePersistanceManager(@ApplicationContext appContext: Context): PersistanceManager {
         return PersistanceManager(appContext)
     }
-
-
-
 }

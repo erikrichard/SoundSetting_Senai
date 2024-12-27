@@ -13,7 +13,6 @@ import com.senai.soundsetting.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
 class ProfileViewModel
