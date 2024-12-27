@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.senai.soundsetting.R
 import com.senai.soundsetting.data.entity.AudioSetting
+import com.senai.soundsetting.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +25,7 @@ class ProfileFragment : Fragment() {
 
     private val TAG = this::class.simpleName
     private val viewModel: ProfileViewModel by viewModels()
+    private lateinit var addProfileButton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
@@ -45,7 +47,7 @@ class ProfileFragment : Fragment() {
 
         //Configura o recycleView
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val addProfileButton: ImageButton = view.findViewById(R.id.add_profile)
+        addProfileButton = view.findViewById(R.id.add_profile)
 
         // Observa mudanças na lista de Profiles e atualiza o recycleView
         viewModel.profiles.observe(viewLifecycleOwner, Observer<List<AudioSetting>?> { profiles ->
@@ -54,6 +56,7 @@ class ProfileFragment : Fragment() {
                 viewModel.selectProfile(profile)
             }
             recyclerView.adapter = adapter
+            hideAddProfileButton(profiles?.size ?: Constants.NB_OF_EMPTY_PROFILES)
         })
 
         // Mostra um toast quando um novo profile for selecionado
@@ -94,5 +97,12 @@ class ProfileFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    private fun hideAddProfileButton(numbereOfProfiles: Int) {
+        Log.i(TAG, "hideAddProfileButton $numbereOfProfiles")
+        if (numbereOfProfiles >= 3) {
+            addProfileButton.visibility = View.GONE
+        }
     }
 }
