@@ -45,5 +45,5 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
          name: JUnit Tests            # Name of the check run which will be created
-         path: /app/build/test-results/testReleaseUnitTest/*.xml    # Path to test results
+         path: **/app/build/test-results/testReleaseUnitTest/*.xml    # Path to test results
          reporter: java-junit

@@ -77,7 +77,7 @@ class ProfileFragment : Fragment() {
         buttonAddProfile.setOnClickListener {
             val profileName = editTextProfileName.text.toString().trim()
             if (profileName.isNotEmpty()) {
-//                viewModel.addProfile(AudioSetting(name = profileName))
+                viewModel.addProfile(AudioSetting(profileName))
                 dialog.dismiss()
             } else {
                 editTextProfileName.error = "Profile name cannot be empty"

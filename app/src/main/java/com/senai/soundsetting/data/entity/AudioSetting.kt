@@ -7,21 +7,20 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "audiosetting")
 data class AudioSetting(
     @PrimaryKey(autoGenerate = true)
-    val uid:Int,
+    val uid:Int = 0,
 
     @ColumnInfo(name = "name")
     val name: String,
 
     @ColumnInfo(name = "bass")
-    val bass: Int,
+    val bass: Int = 0,
 
     @ColumnInfo(name = "mid")
-    val mid: Int,
+    val mid: Int = 0,
 
     @ColumnInfo(name = "treble")
-    val treble: Int,
+    val treble: Int = 0,
 
     @ColumnInfo(name = "volumeLevel")
-    val volumeLevel : Int
-
+    val volumeLevel : Int = 0,
 )
