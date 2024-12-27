@@ -12,15 +12,19 @@ import com.senai.soundsetting.R
 import com.senai.soundsetting.data.entity.AudioSetting
 import kotlin.math.log
 
-class ProfileAdapter(private val profiles: List<AudioSetting>?,
+class ProfileAdapter(private var profiles: List<AudioSetting>?,
                      private val onProfileSelected: (AudioSetting) -> Unit) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
     private var selectedPosition: Int = RecyclerView.NO_POSITION
+    private var onEditProfileListener: ((position:AudioSetting) -> Unit)? = null
+    private var onDeleteProfileListener: ((position:AudioSetting) -> Unit)? = null
     private val TAG = this::class.simpleName
 
     class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileButton: ImageButton = itemView.findViewById(R.id.profileButton)
         val profileName: TextView = itemView.findViewById(R.id.profileName)
+        val editProfileButton: ImageButton = itemView.findViewById(R.id.editProfileButton)
+        val deleteProfileButton: ImageButton = itemView.findViewById(R.id.deleteProfileButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -35,11 +39,12 @@ class ProfileAdapter(private val profiles: List<AudioSetting>?,
         holder.profileName.text = profile?.name
 
         holder.itemView.isSelected = (selectedPosition == position)
-
+        Log.i(TAG, "onBindViewHolder position = $position, selectedPosition = $selectedPosition  isSelected = ${selectedPosition == position}")
         holder.itemView.setOnClickListener {
             if (selectedPosition != position) {
                 val previousPosition = selectedPosition
                 selectedPosition = position
+                Log.i(TAG, "SelectedPosition $selectedPosition")
                 notifyItemChanged(previousPosition)  // Deselect previous
                 notifyItemChanged(selectedPosition)  // Select new
                 if (profile != null) {
@@ -54,11 +59,32 @@ class ProfileAdapter(private val profiles: List<AudioSetting>?,
             Log.i(TAG, "Profile button clicked")
             holder.itemView.performClick()
         }
+
+        holder.editProfileButton.setOnClickListener{
+            if (profile != null)
+                onEditProfileListener?.invoke(profile)
+        }
+
+        holder.deleteProfileButton.setOnClickListener{
+            if (profile != null)
+                onDeleteProfileListener?.invoke(profile)
+        }
+
     }
 
     override fun getItemCount(): Int {
         val size = profiles?.size ?: 0
         Log.i(TAG, "getItemCount $size")
         return size
+    }
+    fun updateProfiles(profiles: List<AudioSetting>?){
+        this.profiles = profiles
+        notifyDataSetChanged()
+    }
+    fun setOnEditProfileListener(onEditProfileListener: ((position:AudioSetting) -> Unit)){
+        this.onEditProfileListener = onEditProfileListener
+    }
+    fun setOnDeleteProfileListener(onDeleteProfileListener: ((position:AudioSetting) -> Unit)){
+        this.onDeleteProfileListener = onDeleteProfileListener
     }
 }

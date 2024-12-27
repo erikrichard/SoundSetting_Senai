@@ -59,6 +59,13 @@ class ProfileViewModel
         }
     }
 
+    fun updateProfile(profile: AudioSetting, newName:String){
+        Log.i(TAG, "updateProfile $profile")
+        viewModelScope.launch {
+            repository.editAudioSetting(profile.uid, newName)
+        }
+    }
+
     fun deleteProfile(profile: AudioSetting) {
         Log.i(TAG, "deleteProfile $profile")
         viewModelScope.launch {

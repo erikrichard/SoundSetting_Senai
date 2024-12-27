@@ -48,7 +48,12 @@ class AudioSettingRepositoryImpl
          _state.value = RepositoryState.UPDATED
      }
 
-     override suspend fun deleteAudioSetting(audioSetting: AudioSetting){
+    override suspend fun editAudioSetting(id: Int, newName: String) {
+       dao.updateName(id, newName)
+       _state.value = RepositoryState.UPDATED
+    }
+
+    override suspend fun deleteAudioSetting(audioSetting: AudioSetting){
          Log.i(TAG,"deleteAudioSetting - $audioSetting")
          dao.deleteAudioSetting(audioSetting)
          _state.value = RepositoryState.UPDATED
