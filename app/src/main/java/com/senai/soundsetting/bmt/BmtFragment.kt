@@ -12,7 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.senai.soundsetting.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BmtFragment : Fragment() {
 
     private var bassLevel: Int = 50
