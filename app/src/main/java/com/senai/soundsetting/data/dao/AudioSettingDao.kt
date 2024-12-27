@@ -24,4 +24,14 @@ interface AudioSettingDao {
 
     @Query("SELECT volumeLevel FROM audiosetting WHERE uid = :id")
     suspend fun getVolumeLevel(id: Int): Int
+
+    @Query("SELECT bass FROM audiosetting WHERE uid = :id")
+    suspend fun getBassLevel(id: Int) : Int
+
+    @Query("SELECT mid FROM audiosetting WHERE uid = :id")
+    suspend fun getMidLevel(id: Int) : Int
+
+    @Query("SELECT treble FROM audiosetting WHERE uid = :id")
+    suspend fun getTrebleLevel(id: Int) : Int
+
 }

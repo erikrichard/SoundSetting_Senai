@@ -13,5 +13,8 @@ interface AudioSettingRepository {
     fun clearProfileSelection()
     suspend fun getVolumeLevel() : Int
     suspend fun setVolumeLevel(level: Int)
-
+    suspend fun getBassLevel() : Int
+    suspend fun getMidLevel() : Int
+    suspend fun getTrebleLevel() : Int
+    suspend fun setBMTLevel(bassLevel: Int, midLevel : Int, trebleLevel : Int)
 }
