@@ -23,3 +23,22 @@ jobs:
 
       - name: Execute Gradle build
         run: ./gradlew build
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [gradle]
+    steps:
+    - name: JUnit Test Run
+      run: ./gradlew build
+
+  test-report:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: JUnit Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JUnit Tests            # Name of the check run which will be created
+          path: /app/build/test-results/testReleaseUnitTest/*.xml    # Path to test results
+          reporter: java-junit        # Format of test results
