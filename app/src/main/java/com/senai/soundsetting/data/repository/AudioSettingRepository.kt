@@ -7,6 +7,7 @@ interface AudioSettingRepository {
     suspend fun getAudioSettings(): List<AudioSetting>?
     suspend fun getAudioSettingById(id: Int): AudioSetting?
     suspend fun saveAudioSetting(audioSetting: AudioSetting)
+    suspend fun editAudioSetting(id: Int, newName:String)
     suspend fun deleteAudioSetting(audioSetting: AudioSetting)
     fun getRepositoryState() : LiveData<RepositoryState>
     fun selectProfile(profile: AudioSetting)

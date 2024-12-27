@@ -7,6 +7,7 @@
     tools:context=".profile.ProfileFragment">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -31,13 +32,24 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profile_list"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_profile"
         app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/soundSettingsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SoundSettings"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_profile"
+        app:layout_constraintVertical_bias="0.24000001" />
 
 
 

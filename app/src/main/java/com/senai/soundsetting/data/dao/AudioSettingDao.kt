@@ -16,6 +16,9 @@ interface AudioSettingDao {
     @Query("SELECT * FROM audiosetting WHERE uid = :id")
     suspend fun getById(id: Int): AudioSetting
 
+    @Query("UPDATE audiosetting SET name = :newName WHERE uid = :id")
+    suspend fun updateName(id: Int, newName: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAudioSetting(audioSetting: AudioSetting)
 
