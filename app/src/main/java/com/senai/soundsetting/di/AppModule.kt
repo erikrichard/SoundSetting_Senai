@@ -23,8 +23,10 @@ object AppModule {
         return Room.databaseBuilder(
             appContext,
             AudioSettingDatabase::class.java,
-            "audioSettings.db"
-        ).build()
+            "audioSettings_db"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

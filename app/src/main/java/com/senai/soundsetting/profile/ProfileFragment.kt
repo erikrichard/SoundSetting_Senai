@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         val addProfileButton: ImageButton = view.findViewById(R.id.add_profile)
 
         // Observa mudanças na lista de Profiles e atualiza o recycleView
-        viewModel.profiles.observe(viewLifecycleOwner, Observer<List<AudioSetting>> { profiles ->
+        viewModel.profiles.observe(viewLifecycleOwner, Observer<List<AudioSetting>?> { profiles ->
             val adapter = ProfileAdapter(profiles) { profile ->
                 //Callback chamado quando um novo profile é selecionado pelo usuario
                 viewModel.selectProfile(profile)
@@ -77,7 +77,7 @@ class ProfileFragment : Fragment() {
         buttonAddProfile.setOnClickListener {
             val profileName = editTextProfileName.text.toString().trim()
             if (profileName.isNotEmpty()) {
-                viewModel.addProfile(AudioSetting(name = profileName))
+//                viewModel.addProfile(AudioSetting(name = profileName))
                 dialog.dismiss()
             } else {
                 editTextProfileName.error = "Profile name cannot be empty"

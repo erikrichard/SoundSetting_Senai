@@ -1,4 +1,4 @@
-name: Run Gradle on every push
+name: Run Gradle Build
 
 on:
   pull_request:

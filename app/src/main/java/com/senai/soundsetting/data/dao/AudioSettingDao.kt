@@ -11,14 +11,14 @@ import com.senai.soundsetting.data.entity.AudioSetting
 interface AudioSettingDao {
 
     @Query("SELECT * FROM audiosetting")
-    fun getAll(): List<AudioSetting>
+    suspend fun getAll(): List<AudioSetting>?
 
     @Query("SELECT * FROM audiosetting WHERE uid = :id")
-    fun getById(id: Int): AudioSetting
+    suspend fun getById(id: Int): AudioSetting
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAudioSetting(audioSetting: AudioSetting)
+    suspend fun insertAudioSetting(audioSetting: AudioSetting)
 
     @Delete
-    fun deleteAudioSetting(audioSetting: AudioSetting)
+    suspend fun deleteAudioSetting(audioSetting: AudioSetting)
 }

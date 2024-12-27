@@ -1,5 +1,6 @@
 package com.senai.soundsetting.data.repository
 
+import android.util.Log
 import com.senai.soundsetting.data.dao.AudioSettingDao
 import com.senai.soundsetting.data.entity.AudioSetting
 import javax.inject.Inject
@@ -7,19 +8,24 @@ import javax.inject.Inject
 class AudioSettingRepository
     @Inject constructor(private val dao: AudioSettingDao){
 
-    fun getAudioSettings(): List<AudioSetting>{
-        return dao.getAll()
+    suspend fun getAudioSettings(): List<AudioSetting>?{
+        Log.i(this::class.simpleName,"getAudioSettings")
+        val list = dao.getAll()
+        return list
     }
 
-        fun getAudioSettingById(id: Int): AudioSetting?{
+    suspend fun getAudioSettingById(id: Int): AudioSetting?{
+        Log.i(this::class.simpleName,"getAudioSettingById - $id")
             return dao.getById(id)
-        }
+    }
 
-     fun saveAudioSetting(audioSetting: AudioSetting){
+     suspend fun saveAudioSetting(audioSetting: AudioSetting){
+         Log.i(this::class.simpleName,"saveAudioSetting - $audioSetting")
          dao.insertAudioSetting(audioSetting)
      }
 
-     fun deleteAudioSetting(audioSetting: AudioSetting){
+     suspend fun deleteAudioSetting(audioSetting: AudioSetting){
+         Log.i(this::class.simpleName,"deleteAudioSetting - $audioSetting")
          dao.deleteAudioSetting(audioSetting)
      }
 

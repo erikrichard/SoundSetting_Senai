@@ -1,12 +1,17 @@
 package com.senai.soundsetting.profile
 
+import android.provider.MediaStore.Audio
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.senai.soundsetting.data.entity.AudioSetting
 import com.senai.soundsetting.data.repository.AudioSettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
 class ProfileViewModel
@@ -15,14 +20,12 @@ class ProfileViewModel
 
 
     private val _profiles = MutableLiveData<List<AudioSetting>>().apply {
-        //Todo: Extrair list do banco de dados
-        value = listOf(
-            AudioSetting(name = "John Doe"),
-            AudioSetting(name = "Jane Smith"),
-            AudioSetting(name = "Alice Johnson")
-        )
+        Log.i(this::class.simpleName, "trying to fetch profiles")
+        viewModelScope.launch {
+            value = repository.getAudioSettings()
+        }
     }
-    val profiles: LiveData<List<AudioSetting>> get() = _profiles
+    val profiles: LiveData<List<AudioSetting>?> get() = _profiles
 
     private val _selectedProfile = MutableLiveData<AudioSetting?>()
     val selectedProfile: LiveData<AudioSetting?> get() = _selectedProfile
@@ -37,10 +40,8 @@ class ProfileViewModel
     }
 
     fun addProfile(profile: AudioSetting) {
-        val updatedList = _profiles.value.orEmpty().toMutableList()
-        updatedList.add(profile)
-        _profiles.value = updatedList
-
-        //Todo: Inserir novo profile no banco de dados
+        viewModelScope.launch {
+            repository.saveAudioSetting(profile)
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.senai.soundsetting.profile
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.senai.soundsetting.R
 import com.senai.soundsetting.data.entity.AudioSetting
+import kotlin.math.log
 
-class ProfileAdapter(private val profiles: List<AudioSetting>,
+class ProfileAdapter(private val profiles: List<AudioSetting>?,
                      private val onProfileSelected: (AudioSetting) -> Unit) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
     private var selectedPosition: Int = RecyclerView.NO_POSITION
@@ -26,8 +28,8 @@ class ProfileAdapter(private val profiles: List<AudioSetting>,
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        val profile = profiles[position]
-        holder.profileName.text = profile.name
+        val profile = profiles?.get(position)
+        holder.profileName.text = profile?.name
 
         holder.itemView.isSelected = (selectedPosition == position)
 
@@ -37,7 +39,9 @@ class ProfileAdapter(private val profiles: List<AudioSetting>,
                 selectedPosition = position
                 notifyItemChanged(previousPosition)  // Deselect previous
                 notifyItemChanged(selectedPosition)  // Select new
-                onProfileSelected(profile)  // Trigger the callback
+                if (profile != null) {
+                    onProfileSelected(profile)
+                }
             }
         }
 
@@ -48,6 +52,7 @@ class ProfileAdapter(private val profiles: List<AudioSetting>,
     }
 
     override fun getItemCount(): Int {
-        return profiles.size
+
+        return profiles?.size ?: 0
     }
 }
