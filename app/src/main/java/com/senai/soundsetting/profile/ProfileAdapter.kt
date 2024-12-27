@@ -16,6 +16,7 @@ class ProfileAdapter(private val profiles: List<AudioSetting>?,
                      private val onProfileSelected: (AudioSetting) -> Unit) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
     private var selectedPosition: Int = RecyclerView.NO_POSITION
+    private val TAG = this::class.simpleName
 
     class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileButton: ImageButton = itemView.findViewById(R.id.profileButton)
@@ -23,11 +24,13 @@ class ProfileAdapter(private val profiles: List<AudioSetting>?,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
+        Log.i(TAG, "onCreateViewHolder")
         val view = LayoutInflater.from(parent.context).inflate(R.layout.profile_item, parent, false)
         return ProfileViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        Log.i(TAG, "onBindViewHolder")
         val profile = profiles?.get(position)
         holder.profileName.text = profile?.name
 
@@ -40,6 +43,7 @@ class ProfileAdapter(private val profiles: List<AudioSetting>?,
                 notifyItemChanged(previousPosition)  // Deselect previous
                 notifyItemChanged(selectedPosition)  // Select new
                 if (profile != null) {
+                    Log.i(TAG, "Profile selected: $profile")
                     onProfileSelected(profile)
                 }
             }
@@ -47,12 +51,14 @@ class ProfileAdapter(private val profiles: List<AudioSetting>?,
 
         // Delegate the button click to the item view click
         holder.profileButton.setOnClickListener {
+            Log.i(TAG, "Profile button clicked")
             holder.itemView.performClick()
         }
     }
 
     override fun getItemCount(): Int {
-
-        return profiles?.size ?: 0
+        val size = profiles?.size ?: 0
+        Log.i(TAG, "getItemCount $size")
+        return size
     }
 }

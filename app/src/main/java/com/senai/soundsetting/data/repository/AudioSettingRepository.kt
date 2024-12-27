@@ -7,25 +7,27 @@ import javax.inject.Inject
 
 class AudioSettingRepository
     @Inject constructor(private val dao: AudioSettingDao){
+        
+        private val TAG = this::class.simpleName
 
     suspend fun getAudioSettings(): List<AudioSetting>?{
-        Log.i(this::class.simpleName,"getAudioSettings")
+        Log.i(TAG,"getAudioSettings")
         val list = dao.getAll()
         return list
     }
 
     suspend fun getAudioSettingById(id: Int): AudioSetting?{
-        Log.i(this::class.simpleName,"getAudioSettingById - $id")
+        Log.i(TAG,"getAudioSettingById - $id")
             return dao.getById(id)
     }
 
      suspend fun saveAudioSetting(audioSetting: AudioSetting){
-         Log.i(this::class.simpleName,"saveAudioSetting - $audioSetting")
+         Log.i(TAG,"saveAudioSetting - $audioSetting")
          dao.insertAudioSetting(audioSetting)
      }
 
      suspend fun deleteAudioSetting(audioSetting: AudioSetting){
-         Log.i(this::class.simpleName,"deleteAudioSetting - $audioSetting")
+         Log.i(TAG,"deleteAudioSetting - $audioSetting")
          dao.deleteAudioSetting(audioSetting)
      }
 

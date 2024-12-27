@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.senai.soundsetting.data.entity.AudioSetting
 import com.senai.soundsetting.data.persistance.PersistanceManager
 import com.senai.soundsetting.data.repository.AudioSettingRepository
+import com.senai.soundsetting.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,13 +37,13 @@ class ProfileViewModel
 
     fun selectProfile(profile: AudioSetting) {
         _selectedProfile.value = profile
-        persistanceManager.saveData("selectedProfileId", profile.uid.toString())
+        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, profile.uid.toString())
     }
 
     fun clearSelection() {
         Log.i(TAG, "clearSelection")
         _selectedProfile.value = null
-        persistanceManager.saveData("selectedProfileId", "")
+        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, "")
     }
 
     fun addProfile(profile: AudioSetting) {

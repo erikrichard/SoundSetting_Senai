@@ -2,6 +2,7 @@ package com.senai.soundsetting.profile
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,10 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-
+    private val TAG = this::class.simpleName
     private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(TAG, "onCreate")
         super.onCreate(savedInstanceState)
     }
 
@@ -32,10 +34,12 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.i(TAG, "onCreateView")
         return inflater.inflate(R.layout.profile_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.i(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = view.findViewById(R.id.profile_list)
 
@@ -55,17 +59,20 @@ class ProfileFragment : Fragment() {
         // Mostra um toast quando um novo profile for selecionado
         viewModel.selectedProfile.observe(viewLifecycleOwner, Observer<AudioSetting?> { profile ->
             if (profile != null) {
+                Log.i(TAG, "Selected profile: $profile")
                 Toast.makeText(context, "Selected: ${profile.name}", Toast.LENGTH_SHORT).show()
             }
         })
 
         //Mostra a dialog quando o botao de adicionar profile for clicado
         addProfileButton.setOnClickListener {
+            Log.i(TAG, "addProfileButton clicked")
             showAddProfileDialog()
         }
     }
     //Mostra uma Dialog em tela com o objetivo de adicionar um novo profile
     private fun showAddProfileDialog() {
+        Log.i(TAG, "showAddProfileDialog")
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_profile, null)
         val editTextProfileName = dialogView.findViewById<EditText>(R.id.editTextProfileName)
         val buttonAddProfile = dialogView.findViewById<Button>(R.id.buttonAddProfile)
@@ -77,9 +84,11 @@ class ProfileFragment : Fragment() {
         buttonAddProfile.setOnClickListener {
             val profileName = editTextProfileName.text.toString().trim()
             if (profileName.isNotEmpty()) {
+                Log.i(TAG, "Profile name: $profileName")
                 viewModel.addProfile(AudioSetting(name = profileName))
                 dialog.dismiss()
             } else {
+                Log.i(TAG, "Profile name cannot be empty")
                 editTextProfileName.error = "Profile name cannot be empty"
             }
         }
