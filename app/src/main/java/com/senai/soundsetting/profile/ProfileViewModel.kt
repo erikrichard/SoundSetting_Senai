@@ -42,6 +42,7 @@ class ProfileViewModel
         Log.i(TAG, "selectProfile $profile")
         repository.selectProfile(profile)
     }
+
     fun getSelectedProfileId():Int?{
         return repository.getSelectedProfileId()
     }
@@ -68,7 +69,14 @@ class ProfileViewModel
     fun deleteProfile(profile: AudioSetting) {
         Log.i(TAG, "deleteProfile $profile")
         viewModelScope.launch {
+
             repository.deleteAudioSetting(profile)
+            if(profile.uid == getSelectedProfileId()){
+                val profiles = repository.getAudioSettings()
+                if(!profiles.isNullOrEmpty()){
+                    repository.selectProfile(profiles.last())
+                }
+            }
         }
     }
 

@@ -19,7 +19,6 @@ class AudioSettingRepositoryImpl
     private val _state = MutableLiveData<RepositoryState>()
     private var state : LiveData<RepositoryState> = _state
     private var currentProfileId : Int = -1
-    private var currentProfile : AudioSetting? = null
 
     init {
         Log.i(TAG, "init")
@@ -69,7 +68,6 @@ class AudioSettingRepositoryImpl
         Log.i(TAG, "selectProfile - $profile")
         persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, profile.uid.toString())
         currentProfileId = profile.uid
-        currentProfile = profile
         _state.value = RepositoryState.UPDATED
     }
     private fun selectProfile(profileId:Int){
