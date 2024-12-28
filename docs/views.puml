@@ -1,0 +1,91 @@
+@startuml
+
+package com.senai.soundsetting {
+  package bmt {
+    class BmtFragment {
+      - viewModel : BmtViewModel
+    }
+
+    class BmtViewModel {
+      - repository: AudioSettingRepository
+      - _bassLevel = MutableLiveData<Int>
+      - _midLevel = MutableLiveData<Int>
+      - _trebleLevel = MutableLiveData<Int>
+      + bassLevel: LiveData<Int>
+      + midLevel: LiveData<Int>
+      + trebleLevel: LiveData<Int>
+      + setBassLevel(level: Int)
+      + setMidLevel(level: Int)
+      + setTrebleLevel(level: Int)
+      + saveData()
+      + fetchData()
+    }
+  }
+
+  package volume {
+    class VolumeFragment{
+      - viewModel : VolumeViewModel
+    }
+    class VolumeViewModel{
+      - repository: AudioSettingRepository
+      - _volumeLevel = MutableLiveData<Int>
+      + volumeLevel: LiveData<Int>
+      + setVolumeLevel(level: Int)
+      + saveData()
+      + fetchData()
+    }
+  }
+
+  package profile {
+    class ProfileFragment{
+      - viewModel : ProfileViewModel
+      - addProfileButton : ImageButton
+      - adapter: ProfileAdapter
+      - soundSettingsTitle: TextView
+      - showAddProfileDialog()
+      - showEditProfileDialog(profile:AudioSetting)
+      - hideAddProfileButton(numbereOfProfiles: Int)
+      - hideInitialTitle(numbereOfProfiles: Int)
+    }
+    class ProfileViewModel{
+      - repository: AudioSettingRepository
+      - _profiles = MutableLiveData<List<AudioSetting>>
+      + profiles: LiveData<List<AudioSetting>>
+      + selectProfile(profile: AudioSetting)
+      + getSelectedProfileId():Int?
+      + clearSelection()
+      + addProfile(profile: AudioSetting)
+      + updateProfile(profile: AudioSetting, newName:String)
+      + deleteProfile(profile: AudioSetting)
+      + fetchProfiles()
+    }
+  }
+
+
+
+
+
+}
+
+package android {
+  class Fragment {
+    onCreate()
+    onResume()
+    View onCreateView()
+    onViewCreated()
+  }
+  class ViewModel {
+  }
+
+}
+
+
+
+Fragment <|-- BmtFragment
+Fragment <|-- VolumeFragment
+Fragment <|-- ProfileFragment
+ViewModel <|-- BmtViewModel
+ViewModel <|-- VolumeViewModel
+ViewModel <|-- ProfileViewModel
+
+@enduml

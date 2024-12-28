@@ -1,0 +1,22 @@
+@startuml
+
+package com.senai.soundsetting {
+    class MainActivity {
+        - bottomBar: BottomNavigationView
+        - nbOfProfiles: Int
+        - viewModel: ProfileViewModel
+        - onNumberOfProfilesChanged(newNumberOfProfiles: Int)
+    }
+}
+
+package android {
+    class Activity{
+        onCreate()
+    }
+
+}
+
+Activity <|-- MainActivity
+
+
+@enduml
