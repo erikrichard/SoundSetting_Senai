@@ -1,0 +1,74 @@
+@startuml
+
+package com.senai.soundsetting.data {
+    package repository {
+        interface AudioSettingRepository{
+            getAudioSettings(): List<AudioSetting>?
+            getAudioSettingById(id: Int): AudioSetting?
+            saveAudioSetting(audioSetting: AudioSetting)
+            editAudioSetting(id: Int, newName:String)
+            deleteAudioSetting(audioSetting: AudioSetting)
+            getRepositoryState() : LiveData<RepositoryState>
+            selectProfile(profile: AudioSetting)
+            clearProfileSelection()
+            getSelectedProfileId():Int?
+            getVolumeLevel() : Int
+            setVolumeLevel(level: Int)
+            getBassLevel() : Int
+            getMidLevel() : Int
+            getTrebleLevel() : Int
+            setBMTLevel(bassLevel: Int, midLevel : Int, trebleLevel : Int)
+        }
+        class AudioSettingRepositoryImpl{
+            - audioSettingDao: AudioSettingDao
+            - persistanceManager: PersistanceManager
+            - _state : MutableLiveData<RepositoryState>
+            - state : LiveData<RepositoryState>
+            - currentProfileId : Int
+        }
+        enum RepositoryState{
+            UPDATED
+            READY
+        }
+    }
+
+    package dao {
+        interface AudioSettingDao{
+            + suspend fun getAll(): List<AudioSetting>?
+            + suspend fun getById(id: Int): AudioSetting?
+            + suspend fun updateName(id: Int, newName: String)
+            + suspend fun updateVolumeLevel(id: Int, newVolume: Int)
+            + suspend fun updateBMT(id: Int, newBass: Int, newMid: Int, newTreble: Int)
+            + suspend fun insertAudioSetting(audioSetting: AudioSetting):Long
+            + suspend fun deleteAudioSetting(audioSetting: AudioSetting)
+            + suspend fun getVolumeLevel(id: Int): Int
+            + suspend fun getBassLevel(id: Int) : Int
+            + suspend fun getMidLevel(id: Int) : Int
+            + suspend fun getTrebleLevel(id: Int) : Int
+        }
+    }
+    package entity {
+        class AudioSetting{
+            - id: Int
+            - name: String
+            - volumeLevel: Int
+            - bassLevel: Int
+            - midLevel: Int
+            - trebleLevel: Int
+        }
+    }
+
+    package persistance {
+        class PersistanceManager{
+            + saveData(key: String, value: String)
+            + getData(key: String, defaultValue: String): String
+        }
+    }
+
+
+    AudioSettingRepository <|-- AudioSettingRepositoryImpl
+
+
+
+}
+@enduml
