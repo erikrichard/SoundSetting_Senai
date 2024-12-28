@@ -79,6 +79,7 @@ class ProfileFragment : Fragment() {
             Log.i(TAG, "List profiles: $profiles")
             Log.i(TAG, "Selected profile: ${viewModel.getSelectedProfileId()}")
             adapter.updateProfiles(profiles)
+
             adapter.selectProfile(viewModel.getSelectedProfileId())
 
             hideAddProfileButton(profiles?.size ?: Constants.NB_OF_EMPTY_PROFILES)
