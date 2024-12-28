@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.3"
+androidDocumentationPlugin = "2.0.0"
 hiltAndroidCompiler = "2.48"
 kotlin = "2.0.21"
 coreKtx = "1.10.1"
@@ -19,6 +20,7 @@ navigationUiKtx = "2.8.5"
 roomRuntime = "2.6.1"
 
 [libraries]
+android-documentation-plugin = { module = "org.jetbrains.dokka:android-documentation-plugin", version.ref = "androidDocumentationPlugin" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-guava = { module = "androidx.room:room-guava", version.ref = "roomRuntime" }
