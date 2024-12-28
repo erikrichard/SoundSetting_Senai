@@ -1,5 +1,7 @@
 package com.senai.soundsetting.profile
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -26,10 +28,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private val TAG = this::class.simpleName
+    private val NO_PROFILE_REGISTERED = -1
     private val viewModel: ProfileViewModel by viewModels()
+
     private lateinit var addProfileButton : ImageButton
     private lateinit var adapter:ProfileAdapter
     private lateinit var soundSettingsTitle:TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
@@ -47,6 +52,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.i(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
+
         val recyclerView: RecyclerView = view.findViewById(R.id.profile_list)
         soundSettingsTitle = view.findViewById(R.id.soundSettingsTitle)
 
@@ -70,17 +76,13 @@ class ProfileFragment : Fragment() {
 
         // Observa mudanças na lista de Profiles e atualiza o recycleView
         viewModel.profiles.observe(viewLifecycleOwner, Observer<List<AudioSetting>?> { profiles ->
+            Log.i(TAG, "List profiles: $profiles")
+            Log.i(TAG, "Selected profile: ${viewModel.getSelectedProfileId()}")
             adapter.updateProfiles(profiles)
+            adapter.selectProfile(viewModel.getSelectedProfileId())
+
             hideAddProfileButton(profiles?.size ?: Constants.NB_OF_EMPTY_PROFILES)
             hideInitialTitle(profiles?.size ?: Constants.NB_OF_EMPTY_PROFILES)
-        })
-
-        // Mostra um toast quando um novo profile for selecionado
-        viewModel.selectedProfile.observe(viewLifecycleOwner, Observer<AudioSetting?> { profile ->
-            if (profile != null) {
-                Log.i(TAG, "Selected profile: $profile")
-                Toast.makeText(context, "Selected: ${profile.name}", Toast.LENGTH_SHORT).show()
-            }
         })
 
         //Mostra a dialog quando o botao de adicionar profile for clicado
@@ -145,6 +147,8 @@ class ProfileFragment : Fragment() {
         Log.i(TAG, "hideAddProfileButton $numbereOfProfiles")
         if (numbereOfProfiles >= 3) {
             addProfileButton.visibility = View.GONE
+        } else {
+            addProfileButton.visibility = View.VISIBLE
         }
     }
     private fun hideInitialTitle(numbereOfProfiles: Int){
@@ -154,4 +158,6 @@ class ProfileFragment : Fragment() {
             soundSettingsTitle.visibility = View.GONE
         }
     }
+
+
 }

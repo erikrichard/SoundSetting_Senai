@@ -29,11 +29,7 @@ class BmtViewModel
 
     init {
         Log.i(TAG, "init")
-        viewModelScope.launch {
-            _bassLevel.value = repository.getBassLevel()
-            _midLevel.value = repository.getMidLevel()
-            _trebleLevel.value = repository.getTrebleLevel()
-        }
+        fetchData()
     }
 
     fun setBassLevel(level: Int) {
@@ -52,10 +48,17 @@ class BmtViewModel
         Log.i(TAG, "saveData")
         viewModelScope.launch {
             repository.setBMTLevel(
-            _bassLevel.value!!,
+                _bassLevel.value!!,
                 _midLevel.value!!,
                 _trebleLevel.value!!
             )
+        }
+    }
+    fun fetchData(){
+        viewModelScope.launch {
+            _bassLevel.value = repository.getBassLevel()
+            _midLevel.value = repository.getMidLevel()
+            _trebleLevel.value = repository.getTrebleLevel()
         }
     }
 }

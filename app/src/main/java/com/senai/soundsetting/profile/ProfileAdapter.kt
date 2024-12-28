@@ -74,7 +74,6 @@ class ProfileAdapter(private var profiles: List<AudioSetting>?,
 
     override fun getItemCount(): Int {
         val size = profiles?.size ?: 0
-        Log.i(TAG, "getItemCount $size")
         return size
     }
     fun updateProfiles(profiles: List<AudioSetting>?){
@@ -86,5 +85,18 @@ class ProfileAdapter(private var profiles: List<AudioSetting>?,
     }
     fun setOnDeleteProfileListener(onDeleteProfileListener: ((position:AudioSetting) -> Unit)){
         this.onDeleteProfileListener = onDeleteProfileListener
+    }
+
+    fun selectProfile(profileId:Int?){
+        val position = profiles?.indexOfFirst { profile -> profile.uid == profileId }
+        Log.i(TAG, "selectProfile position  = $position , size = ${profiles?.size}")
+        if(position != null && position != -1){
+            val previousPosition = selectedPosition
+            selectedPosition = position
+
+            notifyItemChanged(previousPosition)  // Deselect previous
+            notifyItemChanged(selectedPosition)  // Select new
+
+        }
     }
 }
