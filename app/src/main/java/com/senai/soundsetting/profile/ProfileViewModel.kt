@@ -29,8 +29,6 @@ class ProfileViewModel
     }
     val profiles: LiveData<List<AudioSetting>?> get() = _profiles
 
-    private val _selectedProfile = MutableLiveData<AudioSetting?>()
-    val selectedProfile: LiveData<AudioSetting?> get() = _selectedProfile
 
     init {
         Log.i(TAG, "init")
@@ -42,13 +40,14 @@ class ProfileViewModel
 
     fun selectProfile(profile: AudioSetting) {
         Log.i(TAG, "selectProfile $profile")
-        _selectedProfile.value = profile
         repository.selectProfile(profile)
+    }
+    fun getSelectedProfileId():Int?{
+        return repository.getSelectedProfileId()
     }
 
     fun clearSelection() {
         Log.i(TAG, "clearSelection")
-        _selectedProfile.value = null
         repository.clearProfileSelection()
     }
 

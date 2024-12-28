@@ -21,10 +21,8 @@ class VolumeViewModel
     val volumeLevel: LiveData<Int> get() = _volumeLevel
 
     init {
-        Log.i(TAG, "init")
-        viewModelScope.launch {
-            _volumeLevel.value = repository.getVolumeLevel()
-        }
+       Log.i(TAG, "init")
+       fetchData()
     }
 
     fun setVolumeLevel(level: Int) {
@@ -35,6 +33,11 @@ class VolumeViewModel
         Log.i(TAG, "saveData")
         viewModelScope.launch {
             repository.setVolumeLevel(volumeLevel.value!!)
+        }
+    }
+    fun fetchData(){
+        viewModelScope.launch {
+            _volumeLevel.value = repository.getVolumeLevel()
         }
     }
 }

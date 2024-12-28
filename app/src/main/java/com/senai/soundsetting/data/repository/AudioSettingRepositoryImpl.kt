@@ -18,7 +18,7 @@ class AudioSettingRepositoryImpl
     private val TAG = this::class.simpleName
     private val _state = MutableLiveData<RepositoryState>()
     private var state : LiveData<RepositoryState> = _state
-    private var currentProfileId : Int = 0
+    private var currentProfileId : Int = -1
     private var currentProfile : AudioSetting? = null
 
     init {
@@ -44,7 +44,8 @@ class AudioSettingRepositoryImpl
 
      override suspend fun saveAudioSetting(audioSetting: AudioSetting){
          Log.i(TAG,"saveAudioSetting - $audioSetting")
-         dao.insertAudioSetting(audioSetting)
+         val insertedId = dao.insertAudioSetting(audioSetting)
+         selectProfile(insertedId.toInt())
          _state.value = RepositoryState.UPDATED
      }
 
@@ -71,6 +72,16 @@ class AudioSettingRepositoryImpl
         currentProfile = profile
         _state.value = RepositoryState.UPDATED
     }
+    private fun selectProfile(profileId:Int){
+        Log.i(TAG, "selectProfileId - $profileId")
+        persistanceManager.saveData(Constants.PERSISTANCE_PROFILE_KEY, profileId.toString())
+        currentProfileId = profileId
+        _state.value = RepositoryState.UPDATED
+    }
+
+    override fun getSelectedProfileId(): Int? {
+        return currentProfileId
+    }
 
     override fun clearProfileSelection() {
         Log.i(TAG, "clearProfileSelection")
@@ -88,8 +99,7 @@ class AudioSettingRepositoryImpl
 
     override suspend fun setVolumeLevel(level: Int) {
         Log.i(TAG, "setVolumeLevel - $level")
-        currentProfile?.volumeLevel = level
-        dao.insertAudioSetting(currentProfile!!)
+        dao.updateVolumeLevel(currentProfileId,level)
         _state.value = RepositoryState.UPDATED
     }
 
@@ -116,10 +126,7 @@ class AudioSettingRepositoryImpl
 
     override suspend fun setBMTLevel(bassLevel: Int, midLevel: Int, trebleLevel: Int) {
         Log.i(TAG, "setBMTLevel - $bassLevel, $midLevel, $trebleLevel")
-        currentProfile?.bass = bassLevel
-        currentProfile?.mid = midLevel
-        currentProfile?.treble = trebleLevel
-        dao.insertAudioSetting(currentProfile!!)
+        dao.updateBMT(currentProfileId, bassLevel, midLevel, trebleLevel)
         _state.value = RepositoryState.UPDATED
     }
 

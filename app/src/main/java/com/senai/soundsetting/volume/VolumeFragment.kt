@@ -30,6 +30,11 @@ class VolumeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_volume, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchData()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
