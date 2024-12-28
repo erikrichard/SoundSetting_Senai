@@ -23,8 +23,7 @@
             android:layout_marginEnd="16dp"
             android:text="Add Profile"
             android:textSize="20dp"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
+            android:gravity="center"
             />
 
         <ImageButton
